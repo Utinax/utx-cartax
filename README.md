@@ -1,6 +1,6 @@
 # utx-cartax
-Araç vergi sistemi.
+Car tax system.
 
-Eklentinin çalışması için owned_vehicles tablosundaki 'job' bölümünün default'unun NULL yerine 'civ' olarak ayarlanması gereklidir.
+You have to set the default value to 'civ' in owned_vehicles table to work this script.
 
-Bu ve bunun gibi ücretsiz eklentilerimi paylaştığım discord sunucuma gelmeyi unutmayınız. https://discord.gg/kvfWuMj6FN
+If you want to say or share something, here my discord server: https://discord.gg/kvfWuMj6FN
