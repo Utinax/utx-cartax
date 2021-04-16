@@ -239,4 +239,4 @@ VergiKontrol = function()
     TriggerEvent('utx-cartax:tax')
 end
 
-TriggerEvent('cron:runAt', Config.Saat, Config.Dakika, VergiKontrol)
+TriggerEvent('cron:runAt', Config.Hour, Config.Minute, VergiKontrol)
