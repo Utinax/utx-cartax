@@ -36,7 +36,7 @@ AddEventHandler('utx-cartax:tax', function()
                         ['@plate'] = result[i].plate
                     })
                     if xPlayer ~= nil then
-                        xPlayer.showNotification(result[i].plate..' plakalı aracınız vergi borcu olduğu için bağlandı. Vergi dairesinden aracınızı geri alabilirsiniz.')
+                        xPlayer.showNotification('Your car with plate '..result[i].plate..' is impounded for tax debt. You can get your car back from the tax office.')
                     end
                 else
                     MySQL.Async.execute('UPDATE owned_vehicles SET tax = tax + @tax WHERE owner = @owner AND type = @type AND job = @job AND plate = @plate',
@@ -50,7 +50,7 @@ AddEventHandler('utx-cartax:tax', function()
                 end
             end
         end
-        print('^2[utx-cartax]^0 Vergi kesimi başarılı!')
+        print('^2[utx-cartax]^0 Tax cut is successful!')
     end)
 end)
 
@@ -113,9 +113,9 @@ AddEventHandler('utx-cartax:returncar', function(plate)
                         ['@plate'] = plate
                     })
                     xPlayer.removeMoney(result[1].tax)
-                    xPlayer.showNotification(plate..' plakalı aracınızın '..result[1].tax..'$ vergi borcunu ödediniz.')
+                    xPlayer.showNotification('You paid '..result[1].tax..'$ tax of the car with plate '..plate..'.')
                 else
-                    xPlayer.showNotification('Üzerinizde '..plate..' plakalı aracın '..result[1].tax..'$ vergi borcunu ödeyecek kadar para yok.')
+                    xPlayer.showNotification('You don\'t have enough money to pay '..result[1].tax..'$ tax of the car with plate '..plate..'.')
                 end
             end
         else
@@ -149,12 +149,12 @@ AddEventHandler('utx-cartax:returncar', function(plate)
                             ['@plate'] = plate
                         })
                         xPlayer.removeMoney(result[1].tax)
-                        xPlayer.showNotification(plate..' plakalı aracınızın '..result[1].tax..'$ vergi borcunu ödediniz. Aracınız garajınıza geri gönderildi.')
+                        xPlayer.showNotification('You paid '..result[1].tax..'$ tax of the car with plate '..plate..'. The car is sent back to your garage.')
                     else
-                        xPlayer.showNotification('Üzerinizde '..plate..' plakalı aracın '..result[1].tax..'$ vergi borcunu ödeyecek kadar para yok.')
+                        xPlayer.showNotification('You don\'t have enough money to pay '..result[1].tax..'$ tax of the car with plate '..plate..'.')
                     end
                 else
-                    xPlayer.showNotification('Lütfen geçerli bir plaka giriniz!')
+                    xPlayer.showNotification('Please enter a valid plate!')
                 end
             end)
         end
@@ -210,7 +210,7 @@ ESX.RegisterServerCallback('utx-cartax:carinfo3', function(source, cb, plate)
     function(result)
         if result[1] then
             if result[1].tax == 0 then
-                xPlayer.showNotification('Aracınızın ödenecek bir borcu yok.')
+                xPlayer.showNotification('Your car don\t have any tax to be paid.')
             else
                 local vergi = result[1].tax
                 cb(vergi)
@@ -228,7 +228,7 @@ ESX.RegisterServerCallback('utx-cartax:carinfo3', function(source, cb, plate)
                     local vergi = result[1].tax
                     cb(vergi)
                 else
-                    xPlayer.showNotification('Lütfen geçerli bir plaka giriniz!')
+                    xPlayer.showNotification('Please enter a valid plate!')
                 end
             end)
         end
