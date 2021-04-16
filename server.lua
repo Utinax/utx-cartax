@@ -36,8 +36,7 @@ AddEventHandler('utx-cartax:tax', function()
                         ['@plate'] = result[i].plate
                     })
                     if xPlayer ~= nil then
-                        TriggerClientEvent('mythic_notify:client:SendAlert', xPlayer.source, { type = 'inform', text = result[i].plate..' plakalı aracınız vergi borcu olduğu için bağlandı. Vergi dairesinden aracınızı geri alabilirsiniz.', length = 5000 })
-                        --xPlayer.showNotification(result[i].plate..' plakalı aracınız vergi borcu olduğu için bağlandı. Vergi dairesinden aracınızı geri alabilirsiniz.')
+                        xPlayer.showNotification(result[i].plate..' plakalı aracınız vergi borcu olduğu için bağlandı. Vergi dairesinden aracınızı geri alabilirsiniz.')
                     end
                 else
                     MySQL.Async.execute('UPDATE owned_vehicles SET tax = tax + @tax WHERE owner = @owner AND type = @type AND job = @job AND plate = @plate',
@@ -114,11 +113,9 @@ AddEventHandler('utx-cartax:returncar', function(plate)
                         ['@plate'] = plate
                     })
                     xPlayer.removeMoney(result[1].tax)
-                    TriggerClientEvent('mythic_notify:client:SendAlert', xPlayer.source, { type = 'inform', text = plate..' plakalı aracınızın '..result[1].tax..'$ vergi borcunu ödediniz.', length = 5000 })
-                    --xPlayer.showNotification(plate..' plakalı aracınızın '..result[1].tax..'$ vergi borcunu ödediniz.')
+                    xPlayer.showNotification(plate..' plakalı aracınızın '..result[1].tax..'$ vergi borcunu ödediniz.')
                 else
-                    TriggerClientEvent('mythic_notify:client:SendAlert', xPlayer.source, { type = 'inform', text = 'Üzerinizde '..plate..' plakalı aracın '..result[1].tax..'$ vergi borcunu ödeyecek kadar para yok.', length = 5000 })
-                    --xPlayer.showNotification('Üzerinizde '..plate..' plakalı aracın '..result[1].tax..'$ vergi borcunu ödeyecek kadar para yok.')
+                    xPlayer.showNotification('Üzerinizde '..plate..' plakalı aracın '..result[1].tax..'$ vergi borcunu ödeyecek kadar para yok.')
                 end
             end
         else
@@ -152,15 +149,12 @@ AddEventHandler('utx-cartax:returncar', function(plate)
                             ['@plate'] = plate
                         })
                         xPlayer.removeMoney(result[1].tax)
-                        TriggerClientEvent('mythic_notify:client:SendAlert', xPlayer.source, { type = 'inform', text = plate..' plakalı aracınızın '..result[1].tax..'$ vergi borcunu ödediniz. Aracınız garajınıza geri gönderildi.', length = 5000 })
-                        --xPlayer.showNotification(plate..' plakalı aracınızın '..result[1].tax..'$ vergi borcunu ödediniz. Aracınız garajınıza geri gönderildi.')
+                        xPlayer.showNotification(plate..' plakalı aracınızın '..result[1].tax..'$ vergi borcunu ödediniz. Aracınız garajınıza geri gönderildi.')
                     else
-                        TriggerClientEvent('mythic_notify:client:SendAlert', xPlayer.source, { type = 'inform', text = 'Üzerinizde '..plate..' plakalı aracın '..result[1].tax..'$ vergi borcunu ödeyecek kadar para yok.', length = 5000 })
-                        --xPlayer.showNotification('Üzerinizde '..plate..' plakalı aracın '..result[1].tax..'$ vergi borcunu ödeyecek kadar para yok.')
+                        xPlayer.showNotification('Üzerinizde '..plate..' plakalı aracın '..result[1].tax..'$ vergi borcunu ödeyecek kadar para yok.')
                     end
                 else
-                    TriggerClientEvent('mythic_notify:client:SendAlert', xPlayer.source, { type = 'inform', text = 'Lütfen geçerli bir plaka giriniz!', length = 5000 })
-                    --xPlayer.showNotification('Lütfen geçerli bir plaka giriniz!')
+                    xPlayer.showNotification('Lütfen geçerli bir plaka giriniz!')
                 end
             end)
         end
@@ -216,8 +210,7 @@ ESX.RegisterServerCallback('utx-cartax:carinfo3', function(source, cb, plate)
     function(result)
         if result[1] then
             if result[1].tax == 0 then
-                TriggerClientEvent('mythic_notify:client:SendAlert', xPlayer.source, { type = 'inform', text = 'Aracınızın ödenecek bir borcu yok.', length = 5000 })
-                --xPlayer.showNotification('Aracınızın ödenecek bir borcu yok.')
+                xPlayer.showNotification('Aracınızın ödenecek bir borcu yok.')
             else
                 local vergi = result[1].tax
                 cb(vergi)
@@ -235,8 +228,7 @@ ESX.RegisterServerCallback('utx-cartax:carinfo3', function(source, cb, plate)
                     local vergi = result[1].tax
                     cb(vergi)
                 else
-                    TriggerClientEvent('mythic_notify:client:SendAlert', xPlayer.source, { type = 'inform', text = 'Lütfen geçerli bir plaka giriniz!', length = 5000 })
-                    --xPlayer.showNotification('Lütfen geçerli bir plaka giriniz!')
+                    xPlayer.showNotification('Lütfen geçerli bir plaka giriniz!')
                 end
             end)
         end
@@ -248,7 +240,3 @@ VergiKontrol = function()
 end
 
 TriggerEvent('cron:runAt', Config.Saat, Config.Dakika, VergiKontrol)
-
--- RegisterCommand('testet', function()
---     TriggerEvent('utx-cartax:tax')
--- end)
