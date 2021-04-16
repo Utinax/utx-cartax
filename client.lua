@@ -27,12 +27,12 @@ Citizen.CreateThread(function()
         local sleep = 2000
         local ped = PlayerPedId()
         local pCoords = GetEntityCoords(ped)
-        local distance = Vdist2(pCoords, Config.VergiDairesi.x, Config.VergiDairesi.y, Config.VergiDairesi.z)
+        local distance = Vdist2(pCoords, Config.TaxOffice.x, Config.TaxOffice.y, Config.TaxOffice.z)
         if distance < 125 then
             sleep = 5
-            DrawMarker(2, Config.VergiDairesi.x, Config.VergiDairesi.y, Config.VergiDairesi.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.4, 0.4, 0.2, 255, 255, 255, 255, 0, 0, 0, 1, 0, 0, 0)
+            DrawMarker(2, Config.TaxOffice.x, Config.TaxOffice.y, Config.TaxOffice.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.4, 0.4, 0.2, 255, 255, 255, 255, 0, 0, 0, 1, 0, 0, 0)
             if distance < 2 then
-                DrawText3D(Config.VergiDairesi.x, Config.VergiDairesi.y, Config.VergiDairesi.z + 0.4, '[E] - Vergi Dairesi')
+                DrawText3D(Config.TaxOffice.x, Config.TaxOffice.y, Config.TaxOffice.z + 0.4, '[E] - Tax Office')
                 if IsControlJustPressed(0, 38) then
                     VergiKontrol()
                 end
@@ -46,7 +46,7 @@ function VergiKontrol()
     ESX.UI.Menu.Open(
         'dialog', GetCurrentResourceName(), 'vergi_kontrol',
         {
-            title = ('Lütfen araç plakası giriniz.'),
+            title = ('Please enter a car plate.'),
         },
         function(data, menu)
             menu.close()
@@ -54,11 +54,11 @@ function VergiKontrol()
             ESX.TriggerServerCallback('utx-cartax:carinfo3', function(vergi)
                 ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'vergi_kontrol2',
                 {
-                    title    = 'Aracınızın '..vergi..'$ borcu var. Ödemek istiyor musunuz?',
+                    title    = 'Your car have '..vergi..'$ tax debt. Do you want to pay?',
                     align    = 'top-left',
                     elements = {
-                        {label = 'Evet', value = 'evet'},
-                        {label = 'Hayır', value = 'hayir'}
+                        {label = 'Yes', value = 'evet'},
+                        {label = 'No', value = 'hayir'}
                     }
                 },
                 function(data2, menu2)
@@ -79,34 +79,22 @@ function VergiKontrol()
     end)
 end
 
-RegisterCommand('vergi', function()
+RegisterCommand('tax', function()
     local ped = PlayerPedId()
     local vehicle = GetVehiclePedIsIn(ped, false)
     local plate = GetVehicleNumberPlateText(vehicle)
     local name = GetEntityModel(vehicle)
     ESX.TriggerServerCallback('utx-cartax:carinfo2', function(vergi)
-        if Config.Mythic_SendAlert then
-            exports['mythic_notify']:SendAlert('inform', 'Aracın mevcut vergisi: '..vergi..'$')
-        else
-            exports['mythic_notify']:DoHudText('inform', 'Aracın mevcut vergisi: '..vergi..'$')
-        end
-        --ESX.ShowNotification('Aracın mevcut vergisi: '..vergi..'$')
+        ESX.ShowNotification('Car\'s current tax: '..vergi..'$')
     end, plate)
     ESX.TriggerServerCallback('utx-cartax:carinfo', function(vergi, sinirvergi)
-        if Config.Mythic_SendAlert then
-            exports['mythic_notify']:SendAlert('inform', 'Aracın günlük vergisi: '..vergi..'$')
-            exports['mythic_notify']:SendAlert('inform', 'Aracın sınır vergisi: '..sinirvergi..'$')
-        else
-            exports['mythic_notify']:DoHudText('inform', 'Aracın günlük vergisi: '..vergi..'$')
-            exports['mythic_notify']:DoHudText('inform', 'Aracın sınır vergisi: '..sinirvergi..'$')
-        end
-        --ESX.ShowNotification('Aracın günlük vergisi: '..vergi..'$')
-        --ESX.ShowNotification('Aracın sınır vergisi: '..sinirvergi..'$')
+        ESX.ShowNotification('Car\'s daily tax: '..vergi..'$')
+        ESX.ShowNotification('Car\'s limit tax: '..sinirvergi..'$')
     end, name)
 end)
 
 Citizen.CreateThread(function()
-    local blip = AddBlipForCoord(vector3(Config.VergiDairesi.x, Config.VergiDairesi.y, Config.VergiDairesi.z))
+    local blip = AddBlipForCoord(vector3(Config.TaxOffice.x, Config.TaxOffice.y, Config.TaxOffice.z))
 
     SetBlipSprite (blip, Config.Blip.sprite)
     SetBlipScale  (blip, Config.Blip.scale)
@@ -114,6 +102,6 @@ Citizen.CreateThread(function()
     SetBlipAsShortRange(blip, true)
 
     BeginTextCommandSetBlipName('STRING')
-    AddTextComponentSubstringPlayerName('Vergi Dairesi')
+    AddTextComponentSubstringPlayerName('Tax Ofice')
     EndTextCommandSetBlipName(blip)
 end)
