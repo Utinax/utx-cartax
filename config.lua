@@ -1,14 +1,12 @@
 Config = {}
 
-Config.Mythic_SendAlert = false -- True yaparsanız mythic_notify SendAlert ile gider, false yaparsanız DoHudText.
+Config.TaxDivision = 25 -- Ex: If tax division is 25, the tax = car's price / 25
+Config.LimitTaxDivision = 2 -- Ex: If limit tax division is 2, the limit tax = car's price / 2
 
-Config.VergiBolum = 25 -- Aracın vergisini hesaplarken araç fiyatının kaça bölüneceği. Örn: 30 ise aracın fiyatı / 30 = aracın günlük vergisi.
-Config.SinirVergiBolum = 2 -- Aracın sınır vergisini hesaplarken kaça bölüneceği. Örn: 2 ise aracın fiyatı / 2 = aracın sınır vergisi.
+Config.TaxOffice = {x = -250.308, y = 6159.350, z = 31.476}
 
-Config.VergiDairesi = {x = -250.308, y = 6159.350, z = 31.476}
-
-Config.Saat = 12
-Config.Dakika = 50
+Config.Hour = 12
+Config.Minute = 50
 
 Config.Blip = {
     sprite = 162,
