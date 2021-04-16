@@ -102,6 +102,6 @@ Citizen.CreateThread(function()
     SetBlipAsShortRange(blip, true)
 
     BeginTextCommandSetBlipName('STRING')
-    AddTextComponentSubstringPlayerName('Tax Ofice')
+    AddTextComponentSubstringPlayerName('Tax Office')
     EndTextCommandSetBlipName(blip)
 end)
