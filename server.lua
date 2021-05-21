@@ -63,7 +63,7 @@ function VergiMiktariniGetir(arachash)
         for i = 1, #result, 1 do
             local model = GetHashKey(result[i].model)
             if model == arachash then
-                aracfiyat = (result[i].price / Config.VergiBolum)
+                aracfiyat = (result[i].price / Config.TaxDivision)
             end
         end
     end)
@@ -80,7 +80,7 @@ function SinirVergiyiGetir(arachash2)
         for i = 1, #result, 1 do
             local model2 = GetHashKey(result[i].model)
             if model2 == arachash2 then
-                aracfiyat2 = (result[i].price / Config.SinirVergiBolum)
+                aracfiyat2 = (result[i].price / Config.LimitTaxDivision)
             end
         end
     end)
